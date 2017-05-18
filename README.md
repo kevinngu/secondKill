@@ -1,2 +1,2 @@
 # secondKill
-spring mvc pracitce
+spring mvc + mybaits pracitce
