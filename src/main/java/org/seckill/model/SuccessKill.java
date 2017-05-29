@@ -12,7 +12,7 @@ public class SuccessKill {
     private long userPhone;
 
     private short state;
-    
+
     private Date createTime;
 
     private SecondKill secondKill;
