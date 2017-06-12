@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.seckill.dao.SecondKillDao">
+    <!--为dao接口提供sql-->
+    <update id="reduceNumber">
+      UPDATE
+        second_kill
+      SET
+        number = number - 1
+      WHERE seckill_id = #{secondKillId}
+      AND start_time <![CDATA[ <= ]]> #{killTime}
+      AND end_time >= #{killTime}
+      AND number > 0;
+    </update>
+
+    <select id="queryById" resultType="SecondKill" parameterType="long">
+      SELECT seckill_id,name,number,start_time,end_time,create_time FROM
+        second_kill
+      WHERE seckill_id = #{secondKillId};
+    </select>
+
+    <select id="queryAll">
+      SELECT seckill_id,name,number,start_time,end_time,create_time FROM
+        second_kill
+      ORDER BY create_time DESC
+      limit #{offset}, #{limit};
+    </select>
+</mapper>
