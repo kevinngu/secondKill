@@ -2,14 +2,28 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper>
-    <update id="insertSuccessKilled">
+<mapper namespace="org.seckill.dao.SuccessKilledDao">
+    <insert id="insertSuccessKilled">
+      <!--add ignore to return 0 when have duplicate private key-->
+      INSERT IGNORE INTO success_kill (seckll_id, user_phone)
+        VALUES (#{secKillId}, #{userPhone});
+    </insert>
 
-    </update>
-
-    <select id="queryById">
-      SELECT seckill_id, user_phone, state, create_time FROM
-        success_kill
-      WHERE seckill_id = #{secKillId};
+    <select id="queryById" resultType="SuccessKill">
+    <!--myBatis can free control the sql-->
+      SELECT
+        sk.seckill_id,
+        sk.user_phone,
+        sk.state,
+        sk.create_time,
+        s.seckill_id AS "second_kill.seckill_id",
+        s.name AS "second_kill.name",
+        s.number AS "second_kill.number",
+        s.start_time AS "second_kill.start_time",
+        s.end_time AS "second_kill.end_time",
+        s.create_time AS "second_kill.create_time"
+      FROM success_kill sk INNER JOIN second_kill s
+      ON sk.seckill_id = s.seckill_id
+      WHERE sk.seckill_id = #{secKillId};
     </select>
 </mapper>
